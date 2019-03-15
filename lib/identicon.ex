@@ -4,12 +4,12 @@ defmodule Identicon do
     input 
     |> hash_input
     |> pick_color 
+    |> build_grid
   end
 
   def hash_input(input) do 
     %Identicon.Image{ 
-      hex: :crypto.hash(:md5, input)
-            |> :binary.bin_to_list 
+      hex: :crypto.hash(:md5, input) |> :binary.bin_to_list 
     }
   end
 
@@ -21,7 +21,10 @@ defmodule Identicon do
     row ++ [ second, first ]
   end
 
-  def build_grid(%Identicon.Image{hex}) do 
+  def build_grid(%Identicon.Image{hex: hex} = image) do 
+    hex 
+    |> Enum.chunk_every(3, 3, :discard)
+    |> Enum.map(&mirror_row/1)
   end 
 
 end
