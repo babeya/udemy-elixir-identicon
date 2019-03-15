@@ -17,4 +17,11 @@ defmodule Identicon do
     %Identicon.Image{image | color: [r, g, b ]}
   end 
 
+  def mirror_row([first, second, _tail] = row) do 
+    row ++ [ second, first ]
+  end
+
+  def build_grid(%Identicon.Image{hex}) do 
+  end 
+
 end
